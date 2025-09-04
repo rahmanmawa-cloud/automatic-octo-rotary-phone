@@ -1,0 +1,71 @@
+firebase.json
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
+
+
+.github/workflows/firebase-deploy.yml
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main   # अगर आपकी repo में 'master' branch है तो इसे बदलें
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Firebase Tools
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
+
+
+README.md
+# Lingua Bridge App (PWA)
+
+Lingua Bridge is a **Progressive Web App (PWA)** for learning Hindi ↔ English.  
+It works **offline**, is **installable**, and uses **Firebase Hosting + GitHub Actions** for auto-deployment.
+
+---
+
+## 🚀 Features
+- Installable as a native-like app
+- Works offline with Service Worker
+- Firebase Analytics integrated
+- Auto-deploy to Firebase Hosting (CI/CD via GitHub Actions)
+
+---
+
+## 🔧 Setup
+
+### Install Firebase CLI
+```bash
+npm install -g firebase-tools
+
+
+firebase login:ci
